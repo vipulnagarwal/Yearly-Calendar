@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>vipul-yearly-calendar</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="angular.min.js" type="application/javascript"></script>
+      <script>
+        var yearlyCalendar = angular.module('yearlyCalendar', []);
+      </script>
+  </head>
+  <body data-ng-app="yearlyCalendar">
+    <div data-ng-controller="yearlyCalendarController"><h1>Choose weekly off</h1>
+        <label ng-repeat="day in fullDays track by $index"><input type="checkbox" ng-click="toggleSelection(day)" ng-checked="exists(day, customAttributes.weekend)" value="{{fullDays.indexOf(day)}}">{{day}}</label>
+        <div id="calendar">
+            <div class="calendar-controls">
+                <div class="control" data-ng-click="previousYear()">«</div>
+                <div class="current-year">{{state.year}}</div>
+                <div class="control"  data-ng-click="nextYear()">»</div>
+            </div>
+            <table class="calendar">
+                <thead class="day-headers">
+                    <tr>
+                        <th ng-repeat="hd in yearCalendar.heads track by $index" class="{{hd.clsName}}">{{hd.innerValue}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="allDay in yearCalendar.days track by $index">
+                        <td ng-repeat="d in allDay track by $index" class="{{d.clsName}}" ng-click="selectThis(d.curDateString)">{{d.innerValue}}</td>                   
+                    </tr>                    
+                </tbody>
+            </table>
+        </div>        
+    </div>
+    <script src="yearlyCalendarController.js" type="application/javascript"></script>
+  </body>
+</html>
