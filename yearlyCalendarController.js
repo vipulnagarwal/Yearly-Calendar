@@ -21,6 +21,7 @@ yearlyCalendar.controller('yearlyCalendarController', function($scope) {
     $scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $scope.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     $scope.fullDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    $scope.fullmonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     
     $scope.today = new Date();
     
@@ -75,6 +76,76 @@ yearlyCalendar.controller('yearlyCalendarController', function($scope) {
     }
     
     $scope.daysOfAYear = function(givenYear) {
+        						// /// New code
+						$scope.months1 = [];
+						for ( var m = 1; m < 13; m++ ) {
+							var sep = 0;
+							var a = 0;
+							var firstDay = new Date( givenYear, m - 1, 1 );
+							console.log( firstDay )
+							var lastDay = new Date( givenYear, m, 0 );
+							$scope.months1[ m - 1 ] = [];
+							$scope.months1[ m - 1 ][ sep ] = [];
+							for ( var n = 1; n <= firstDay.getDay(); n++ ) {
+
+								if ( a % 7 == 0 ) {
+									sep++;
+									$scope.months1[ m - 1 ][ sep ] = [];
+									a = 0;
+									$scope.months1[ m - 1 ][ sep ][ a ] = '';
+								}
+								else {
+									$scope.months1[ m - 1 ][ sep ][ a ] = '';
+								}
+								a++;
+							}
+
+							var printD = 1;
+
+							for ( var n = firstDay.getDate(); n <= lastDay.getDate(); n++ ) {
+
+								if ( a % 7 == 0 ) {
+									sep++;
+									a = 0;
+									$scope.months1[ m - 1 ][ sep ] = [];
+									var d = new Date( givenYear, m - 1, printD );
+									var clndrDay = new calendarRow();
+									clndrDay.clsName += "day-content";
+									clndrDay.curDateString = $scope.createCurDateString( givenYear, m, printD );
+									clndrDay.innerValue = d.getDate();
+									var curDate = $scope.createCurDateString( givenYear, m, printD );
+									if ( $scope.customAttributes.holidays.indexOf( curDate ) > -1 ) {
+										if ( clndrDay.clsName.indexOf( 'holidays' ) > -1 ) {
+											clndrDay.clsName = "day-content";
+										}
+										else {
+											clndrDay.clsName += " holidays";
+										}
+									}
+									$scope.months1[ m - 1 ][ sep ][ a ] = clndrDay;
+								}
+								else {
+									var d = new Date( givenYear, m - 1, printD );
+									var clndrDay = new calendarRow();
+									clndrDay.clsName += "day-content";
+									clndrDay.curDateString = $scope.createCurDateString( givenYear, m, printD );
+									clndrDay.innerValue = d.getDate();
+									var curDate = $scope.createCurDateString( givenYear, m, printD );
+									if ( $scope.customAttributes.holidays.indexOf( curDate ) > -1 ) {
+										if ( clndrDay.clsName.indexOf( 'holidays' ) > -1 ) {
+											clndrDay.clsName = "day-content";
+										}
+										else {
+											clndrDay.clsName += " holidays";
+										}
+									}
+									$scope.months1[ m - 1 ][ sep ][ a ] = clndrDay;
+								}
+								a++;
+								printD++;
+							}
+						}
+						// /// New code
         debugger;
         $scope.yearCalendar = {};
         $scope.yearCalendar.days = [];
