@@ -10,7 +10,9 @@
       </script>
   </head>
   <body data-ng-app="yearlyCalendar">
-    <div data-ng-controller="yearlyCalendarController"><h1>Choose weekly off</h1>
+    <div data-ng-controller="yearlyCalendarController">
+      <h1>View 1</h1>
+      <h3>Choose weekly off</h3>
         <label ng-repeat="day in fullDays track by $index"><input type="checkbox" ng-click="toggleSelection(day)" ng-checked="exists(day, customAttributes.weekend)" value="{{fullDays.indexOf(day)}}">{{day}}</label>
         <div id="calendar">
             <div class="calendar-controls">
@@ -30,7 +32,45 @@
                     </tr>                    
                 </tbody>
             </table>
-        </div>        
+        </div> 
+	<h1>View 2</h1>
+	<div id="calendar" class="calendar bluecolor">
+		<div class="calendar-header panel panel-default">
+			<table>
+				<th class="prev" style="color: #323232;" data-ng-click="previousYear()"><<</th>
+				<th class="year-title year-neighbor2 hidden-sm hidden-xs" ng-click='daysOfAYear( state.year-2 )'>{{state.year-2}}</th>
+				<th class="year-title year-neighbor hidden-xs" ng-click='daysOfAYear( state.year-1 )'>{{state.year-1}}</th>
+				<th class="year-title" ng-click='daysOfAYear( state.year )' style="color: #323232;">{{state.year}}</th>
+				<th class="year-title year-neighbor hidden-xs" ng-click='daysOfAYear( state.year+1 )'>{{state.year+1}}</th>
+				<th class="year-title year-neighbor2 hidden-sm hidden-xs" ng-click='daysOfAYear( state.year+2 )'>{{state.year+2}}</th>
+				<th class="next" style="color: #323232;" data-ng-click="nextYear()">>></th>
+			</table>
+		</div>
+		<div class="months-container row bluecolor" style="display: block;">
+			<div ng-repeat="month in fullmonths track by $index">
+				<div class="month-container col m2" style="width: 16.6666666667%;">
+					<table class="month">
+						<thead>
+							<tr>
+								<th class="month-title" colspan="7">{{month}}</th>
+							</tr>
+							<tr>
+								<th class='day-header' ng-repeat='day in days track by $index'>{{day}}</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+		                    <tr ng-repeat="week in months1[$index] track by $index">
+		                    	<td class="day" ng-repeat="d in week track by $index" class="{{d.clsName}}">
+		                    		<div class="{{d.clsName}}" ng-click="selectThis(d.curDateString)">{{d.innerValue}}</div>
+		                    	</td>
+		                    </tr>                    
+		                </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
     </div>
     <script src="yearlyCalendarController.js" type="application/javascript"></script>
   </body>
