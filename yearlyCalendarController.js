@@ -1,11 +1,10 @@
-function calendarRow()
-{
-    clsName = "";
-    innerValue = "";
-    curDateString = "";
-}
+
 yearlyCalendar.controller('yearlyCalendarController', function($scope) {
-    debugger;
+	function calendarRow () {
+		this.clsName = "";
+		this.innerValue = "";
+		this.curDateString = "";
+	}
     $scope.firstName = "Vipul";
     $scope.lastName = "Agarwal";
     
@@ -109,7 +108,9 @@ yearlyCalendar.controller('yearlyCalendarController', function($scope) {
 									a = 0;
 									$scope.months1[ m - 1 ][ sep ] = [];
 									var d = new Date( givenYear, m - 1, printD );
+									debugger;
 									var clndrDay = new calendarRow();
+									
 									clndrDay.clsName += "day-content";
 									clndrDay.curDateString = $scope.createCurDateString( givenYear, m, printD );
 									clndrDay.innerValue = d.getDate();
